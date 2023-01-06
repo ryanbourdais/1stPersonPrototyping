@@ -5,7 +5,8 @@ public class Gun : MonoBehaviour
     public float damage = 10f;
     public float range = 100f;
     public float impactForce = 30f;
-    public float fireRate = 15f;
+    public float roundsPerMinute = 15f;
+    private float fireRate;
     public float autoAccuracy = 0.9f;
     public float readyAccuracy = 0.98f;
     public float readyTime = 0.6f;
@@ -18,13 +19,16 @@ public class Gun : MonoBehaviour
     public GameObject impactEffect;
     public bool debugMode;
     public GameObject debugHitMarker;
+    public float movementMod;
 
     private float nextTimeToFire = 0f;
+    private float count = 0f;
 
 
     void Start() 
     {
         accuracy = readyAccuracy;
+        fireRate = roundsPerMinute * 0.017f;
     }
 
     void Update()
@@ -33,10 +37,11 @@ public class Gun : MonoBehaviour
         float velocity = ((player.transform.position - previousPos).magnitude) / Time.deltaTime;
         previousPos = player.transform.position;
 
-        float accuracyMod = velocity / 50; 
+        float accuracyMod = velocity / (movementMod * 5);
 
         if(Input.GetButton("Fire1") && Time.time >= nextTimeToFire)
         {
+            count++;
             accuracy = autoAccuracy - accuracyMod;
             nextTimeToFire = Time.time + 1f/fireRate;
             Shoot();
@@ -53,8 +58,9 @@ public class Gun : MonoBehaviour
 
         RaycastHit hit;
 
-        Vector3 shotDirection = new Vector3(fpsCam.transform.forward.x * Random.Range(accuracy, 1), fpsCam.transform.forward.y * Random.Range(accuracy, 1), fpsCam.transform.forward.z * Random.Range(accuracy, 1));
+        Debug.Log(fpsCam.transform.forward);
 
+        Vector3 shotDirection = new Vector3(fpsCam.transform.forward.x + Random.Range(accuracy - 1, Mathf.Abs(accuracy - 1)), fpsCam.transform.forward.y + Random.Range(accuracy - 1, Mathf.Abs(accuracy - 1)), fpsCam.transform.forward.z + Random.Range(accuracy - 1, Mathf.Abs(accuracy - 1)));
         if (Physics.Raycast(fpsCam.transform.position, shotDirection, out hit, range))
         {
             Target target = hit.transform.GetComponent<Target>();

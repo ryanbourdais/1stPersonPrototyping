@@ -66,7 +66,6 @@ public class QuakeController : MonoBehaviour
 
     void Update()
 	{
-        
 		if(Input.GetKeyDown(KeyCode.LeftShift) && !sprint)
         {
 			sprint = true;
@@ -79,6 +78,7 @@ public class QuakeController : MonoBehaviour
 		if(controller.isGrounded && sprintTime <= 0)
 		{
 			sprint = false;
+			wishJump = false;
 		}
 
         rotationX += -Input.GetAxis("Mouse Y") * lookSpeed;
@@ -87,12 +87,11 @@ public class QuakeController : MonoBehaviour
         transform.rotation *= Quaternion.Euler(0, Input.GetAxis("Mouse X") * lookSpeed, 0);
 
 		IsGrounded = Physics.CheckSphere(GroundCheck.position, GroundDistance, groundLayer);
-
 		QueueJump();
-
 		/* Movement, here's the important part */
 		if(sprint)
 		{
+			
 			if (controller.isGrounded)
 				groundMove();
 			else if (!controller.isGrounded)
@@ -298,6 +297,15 @@ public class QuakeController : MonoBehaviour
         	float movementDirectionY = moveDirection.y;
         	moveDirection = (forward * curSpeedX) + (right * curSpeedY);
 
+			if (wishJump)
+			{
+				playerVelocity.y = jumpSpeed;
+				wishJump = false;
+			}
+			if (!IsGrounded)
+        	{
+            	playerVelocity.y -= gravity * Time.deltaTime;
+        	}
         	controller.Move(moveDirection * Time.deltaTime);
 		}
 	}

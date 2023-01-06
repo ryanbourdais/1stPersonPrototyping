@@ -362,6 +362,7 @@
 "Assets/Scripts/Gun.cs"
 "Assets/Scripts/QuakeController.cs"
 "Assets/Scripts/Target.cs"
+"Assets/Scripts/Vehicle.cs"
 "Assets/Shared/Ramps/Runtime/RampAsset.cs"
 "Assets/Shared/Scripts/AdjustTimeScale.cs"
 "Assets/Shared/Scripts/ProximityActivate.cs"
