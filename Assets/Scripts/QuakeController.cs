@@ -298,12 +298,6 @@ public class QuakeController : MonoBehaviour
         	float movementDirectionY = moveDirection.y;
         	moveDirection = (forward * curSpeedX) + (right * curSpeedY);
 
-        	if (wishJump)
-			{
-				playerVelocity.y = jumpSpeed;
-				wishJump = false;
-			}
-
         	controller.Move(moveDirection * Time.deltaTime);
 		}
 	}
