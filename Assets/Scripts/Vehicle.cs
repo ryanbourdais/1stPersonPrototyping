@@ -25,7 +25,6 @@ public class Vehicle : MonoBehaviour
     float rotationX = 0;
     float carRotationX = 0;
     float rotationY = 0;
-    public float lookXLimit = 90.0f;
     public float timeElapsed = 0f;
     void Start() 
     {
@@ -67,9 +66,7 @@ public class Vehicle : MonoBehaviour
             carController.transform.localRotation = Quaternion.Euler(0, carRotationX, 0);
 
             rotationY += -Input.GetAxis("Mouse Y") * lookSpeed;
-            rotationY = Mathf.Clamp(rotationY, -lookXLimit, lookXLimit);
             rotationX += -Input.GetAxis("Mouse X") * lookSpeed;
-            rotationX = Mathf.Clamp(rotationX, -lookXLimit, lookXLimit);
             carCam.transform.localRotation = Quaternion.Euler(rotationY, -rotationX, 0);
             if(Input.GetKeyDown(KeyCode.E) && timeElapsed >= 1)
             {
