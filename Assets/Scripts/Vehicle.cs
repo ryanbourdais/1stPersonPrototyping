@@ -15,6 +15,7 @@ public class Vehicle : MonoBehaviour
     public GameObject gun;
     public Canvas mainHUD;
     public float driveSpeed = 30f;
+    public float turnSpeed = 1f;
     Vector3 moveDirection = Vector3.zero;
     private bool playerInCar;
     QuakeController playerCon;
@@ -22,6 +23,8 @@ public class Vehicle : MonoBehaviour
     public CharacterController carController;
     public float lookSpeed = 2.0f;
     float rotationX = 0;
+    float carRotationX = 0;
+    float rotationY = 0;
     public float lookXLimit = 90.0f;
     public float timeElapsed = 0f;
     void Start() 
@@ -60,10 +63,14 @@ public class Vehicle : MonoBehaviour
             moveDirection = (forward * curSpeedX) + (right * curSpeedY);
             carController.Move(moveDirection * Time.deltaTime);
 
-            rotationX += -Input.GetAxis("Mouse Y") * lookSpeed;
+            carRotationX += Input.GetAxis("Horizontal") * turnSpeed;
+            carController.transform.localRotation = Quaternion.Euler(0, carRotationX, 0);
+
+            rotationY += -Input.GetAxis("Mouse Y") * lookSpeed;
+            rotationY = Mathf.Clamp(rotationY, -lookXLimit, lookXLimit);
+            rotationX += -Input.GetAxis("Mouse X") * lookSpeed;
             rotationX = Mathf.Clamp(rotationX, -lookXLimit, lookXLimit);
-            carCam.transform.localRotation = Quaternion.Euler(rotationX, 0, 0);
-            transform.rotation *= Quaternion.Euler(0, Input.GetAxis("Mouse X") * lookSpeed, 0);
+            carCam.transform.localRotation = Quaternion.Euler(rotationY, -rotationX, 0);
             if(Input.GetKeyDown(KeyCode.E) && timeElapsed >= 1)
             {
                 player.transform.position = exitPos.transform.position;
