@@ -192,7 +192,7 @@ GameObject:
   - component: {fileID: 12328203}
   - component: {fileID: 12328202}
   - component: {fileID: 12328201}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: East
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -706,14 +706,14 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 338918096}
-  m_LocalRotation: {x: 0.21004522, y: 0, z: 0, w: 0.9776917}
-  m_LocalPosition: {x: 0, y: 5.98, z: -1.418}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 1.5, z: 0}
   m_LocalScale: {x: 0.25, y: 1, z: 0.16666667}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 958121146}
   m_RootOrder: 5
-  m_LocalEulerAnglesHint: {x: 24.25, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &416560865 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 1294672646082164, guid: 8d43e76b346f2f8448846e9211629d15,
@@ -993,7 +993,7 @@ GameObject:
   - component: {fileID: 484475881}
   - component: {fileID: 484475880}
   - component: {fileID: 484475879}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: North
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1087,7 +1087,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 524692387}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Compass
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -6439,7 +6439,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2196b2b56e8fdf64a86045b15949e4d3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerDistance: 4
+  playerDistance: 3.99
   car: {fileID: 958121141}
   player: {fileID: 1903011247}
   carCam: {fileID: 338918097}
@@ -6452,7 +6452,6 @@ MonoBehaviour:
   turnSpeed: 0.1
   carController: {fileID: 958121147}
   lookSpeed: 2
-  lookXLimit: 90
   timeElapsed: 0
 --- !u!65 &958121143
 BoxCollider:
@@ -6550,8 +6549,8 @@ CharacterController:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Height: 1
-  m_Radius: 0.5
+  m_Height: 0.00075567013
+  m_Radius: 0.4
   m_SlopeLimit: 45
   m_StepOffset: 0.3
   m_SkinWidth: 0.08
@@ -6993,7 +6992,7 @@ GameObject:
   - component: {fileID: 1663700395}
   - component: {fileID: 1663700394}
   - component: {fileID: 1663700393}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: South
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -7121,7 +7120,7 @@ GameObject:
   - component: {fileID: 1743913811}
   - component: {fileID: 1743913810}
   - component: {fileID: 1743913809}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: West
   m_TagString: Untagged
   m_Icon: {fileID: 0}

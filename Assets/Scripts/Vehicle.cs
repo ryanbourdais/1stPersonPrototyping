@@ -72,6 +72,7 @@ public class Vehicle : MonoBehaviour
             {
                 player.transform.position = exitPos.transform.position;
                 playerInCar = false;
+                player.transform.parent = null;
                 mainHUD.enabled = true;
                 carCam.enabled = false;
                 carListener.enabled = false;
