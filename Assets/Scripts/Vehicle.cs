@@ -50,16 +50,15 @@ public class Vehicle : MonoBehaviour
             playerCam.enabled = false;
             playerListener.enabled = false;
             player.transform.parent = car.transform;
+            carController.enabled = true;
         }
         if(playerInCar)
         {
             timeElapsed += timeElapsed + Time.deltaTime;
             Vector3 forward = transform.TransformDirection(Vector3.forward);
-            Vector3 right = transform.TransformDirection(Vector3.right);
 
             float curSpeedX = (driveSpeed) * Input.GetAxis("Vertical");
-            float curSpeedY = (driveSpeed) * Input.GetAxis("Horizontal");
-            moveDirection = (forward * curSpeedX) + (right * curSpeedY);
+            moveDirection = (forward * curSpeedX);
             carController.Move(moveDirection * Time.deltaTime);
 
             carRotationX += Input.GetAxis("Horizontal") * turnSpeed;
@@ -80,15 +79,9 @@ public class Vehicle : MonoBehaviour
                 playerCon.enabled = true;
                 playerCam.enabled = true;
                 playerListener.enabled = true;
+                carController.enabled = false;
                 timeElapsed = 0;
             }
         }
-    }
-
-    void OnDrawGizmosSelected()
-    {
-        // Draw a yellow sphere at the transform's position
-        Gizmos.color = Color.yellow;
-        Gizmos.DrawWireSphere(transform.position, playerDistance);
     }
 }
