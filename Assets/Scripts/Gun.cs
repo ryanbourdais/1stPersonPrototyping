@@ -58,8 +58,6 @@ public class Gun : MonoBehaviour
 
         RaycastHit hit;
 
-        Debug.Log(fpsCam.transform.forward);
-
         Vector3 shotDirection = new Vector3(fpsCam.transform.forward.x + Random.Range(accuracy - 1, Mathf.Abs(accuracy - 1)), fpsCam.transform.forward.y + Random.Range(accuracy - 1, Mathf.Abs(accuracy - 1)), fpsCam.transform.forward.z + Random.Range(accuracy - 1, Mathf.Abs(accuracy - 1)));
         if (Physics.Raycast(fpsCam.transform.position, shotDirection, out hit, range))
         {

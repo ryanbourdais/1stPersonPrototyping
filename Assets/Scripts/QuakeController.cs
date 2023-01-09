@@ -7,12 +7,16 @@ public class QuakeController : MonoBehaviour
     public Transform player;
     public Camera playerCamera;
     public LayerMask groundLayer;
+	public LayerMask wallLayer;
+	public Transform leftCheck;
+	public Transform rightCheck;
 
 	private float wishspeed2;
 	private float gravity = 20f;
 	float wishspeed;
 
 	public float GroundDistance = 0.4f;
+	public float wallDistance = 0.5f;
 	public float moveSpeed = 7.0f;  // Ground move speed
 	public float runSpeed = 14.0f;
 	public float runAcceleration = 14f;   // Ground accel
@@ -25,7 +29,7 @@ public class QuakeController : MonoBehaviour
 	public float jumpSpeed = 8.0f;
 	public float friction = 6f;
 	private float playerTopVelocity = 0;
-	public float playerFriction = 0f;
+	private float playerFriction = 0f;
 
 	private float addspeed;
 	private float accelspeed;
@@ -49,13 +53,15 @@ public class QuakeController : MonoBehaviour
 	Vector3 vec;
 
 	private bool IsGrounded;
+	private bool leftWall;
+	private bool rightWall;
 	
 	Vector3 udp;
     float rotationX = 0;
     public float lookSpeed = 2.0f;
     public float lookXLimit = 90.0f;
-	public bool sprint = false;
-	public float sprintTime = 0f;
+	private bool sprint = false;
+	// private float sprintTime = 0f;
 
     void Start()
     {
@@ -66,20 +72,10 @@ public class QuakeController : MonoBehaviour
 
     void Update()
 	{
-		if(Input.GetKeyDown(KeyCode.LeftShift) && !sprint)
+		if(Input.GetKeyDown(KeyCode.LeftShift))
         {
-			sprint = true;
-			sprintTime = 5.0f;
+			sprint = !sprint;
         }
-		if (sprintTime > 0)
-        {
-            sprintTime -= Time.deltaTime;
-        }
-		if(controller.isGrounded && sprintTime <= 0)
-		{
-			sprint = false;
-			wishJump = false;
-		}
 
         rotationX += -Input.GetAxis("Mouse Y") * lookSpeed;
         rotationX = Mathf.Clamp(rotationX, -lookXLimit, lookXLimit);
@@ -87,6 +83,9 @@ public class QuakeController : MonoBehaviour
         transform.rotation *= Quaternion.Euler(0, Input.GetAxis("Mouse X") * lookSpeed, 0);
 
 		IsGrounded = Physics.CheckSphere(GroundCheck.position, GroundDistance, groundLayer);
+		leftWall = Physics.CheckSphere(leftCheck.position, wallDistance, wallLayer);
+		rightWall = Physics.CheckSphere(rightCheck.position, wallDistance, wallLayer);
+		
 		QueueJump();
 		/* Movement, here's the important part */
 		if(sprint)
@@ -181,7 +180,13 @@ public class QuakeController : MonoBehaviour
 		// !Aircontrol
 
 		// Apply gravity
-		playerVelocity.y -= gravity * Time.deltaTime;
+		if(leftWall || rightWall)
+		{
+			playerVelocity.y = 0;
+		}
+		else{
+			playerVelocity.y -= gravity * Time.deltaTime;
+		}
 
 		/**
 			* Air control occurs when the player is in the air, it allows
