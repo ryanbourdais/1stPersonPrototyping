@@ -23,6 +23,12 @@ public class Gun : MonoBehaviour
 
     private float nextTimeToFire = 0f;
     private float count = 0f;
+    public float blastRadius = 5f;
+    private Collider[] hitTargets = new Collider[0];
+    public ParticleSystem muzzleFlashSecondary;
+    public GameObject explosionEffect;
+    public float explosionDamage;
+    public float explosionForce;
 
 
     void Start() 
@@ -46,9 +52,14 @@ public class Gun : MonoBehaviour
             nextTimeToFire = Time.time + 1f/fireRate;
             Shoot();
         }
-        if(Time.time >= nextTimeToFire + readyTime)
+        if(Input.GetButton("Fire1") && Time.time >= nextTimeToFire + readyTime)
         {
             accuracy = readyAccuracy - accuracyMod;
+            Shoot();
+        }
+        if(Input.GetButton("Fire2"))
+        {
+            ShootSecondary();
         }
     }
 
@@ -78,6 +89,32 @@ public class Gun : MonoBehaviour
             }
 
             GameObject impactGO = Instantiate(impactEffect, hit.point, Quaternion.LookRotation(hit.normal));
+            Destroy(impactGO, 2);
+        }
+    }
+
+    void ShootSecondary()
+    {
+        muzzleFlashSecondary.Play();
+
+        RaycastHit hit;
+
+        Vector3 shotDirection = new Vector3(fpsCam.transform.forward.x + Random.Range(accuracy - 1, Mathf.Abs(accuracy - 1)), fpsCam.transform.forward.y + Random.Range(accuracy - 1, Mathf.Abs(accuracy - 1)), fpsCam.transform.forward.z + Random.Range(accuracy - 1, Mathf.Abs(accuracy - 1)));
+        if (Physics.Raycast(fpsCam.transform.position, shotDirection, out hit, range))
+        {
+            hitTargets = Physics.OverlapSphere(hit.point, blastRadius);
+            foreach(var obj in hitTargets)
+            {
+                Target target = obj.transform.GetComponent<Target>();                
+                if(target != null)
+                {
+                    float distance = Vector3.Distance(hit.point, target.transform.position);
+                    target.TakeDamage(explosionDamage / distance);
+                    obj.GetComponentInParent<Rigidbody>().AddForce((obj.transform.position - hit.point).normalized * explosionForce / (distance * 2));
+                }
+            }
+
+            GameObject impactGO = Instantiate(explosionEffect, hit.point, Quaternion.LookRotation(hit.normal));
             Destroy(impactGO, 2);
         }
     }

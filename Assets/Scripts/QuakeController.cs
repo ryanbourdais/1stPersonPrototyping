@@ -61,7 +61,6 @@ public class QuakeController : MonoBehaviour
     public float lookSpeed = 2.0f;
     public float lookXLimit = 90.0f;
 	private bool sprint = false;
-	// private float sprintTime = 0f;
 
     void Start()
     {

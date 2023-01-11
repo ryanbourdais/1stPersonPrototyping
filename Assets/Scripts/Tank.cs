@@ -21,6 +21,7 @@ public class Tank : MonoBehaviour
     private bool playerInCar;
     QuakeController playerCon;
     Gun playerWeapon;
+    public Cannon cannon;
     Turret tankTurret;
     public CharacterController carController;
     public float lookSpeed = 2.0f;
@@ -45,6 +46,7 @@ public class Tank : MonoBehaviour
             player.transform.position = seatPos.transform.position;
             playerInCar = true;
             mainHUD.enabled = false;
+            cannon.enabled = true;
             tankListener.enabled = true;
             playerWeapon.enabled = false;
             playerCon.enabled = false;
@@ -73,6 +75,7 @@ public class Tank : MonoBehaviour
                 playerInCar = false;
                 player.transform.parent = null;
                 mainHUD.enabled = true;
+                cannon.enabled = false;
                 tankListener.enabled = false;
                 playerWeapon.enabled = true;
                 playerCon.enabled = true;

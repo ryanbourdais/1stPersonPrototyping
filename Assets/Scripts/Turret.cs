@@ -4,17 +4,21 @@ public class Turret : MonoBehaviour
 {
 
     public Camera turretCam;
-    float rotationX = 0;
+    // float rotationX = 0;
     public float lookSpeed = 2.0f;
     public float turnSpeed = 6.0f;
     public GameObject gun;
     public float bottomLookXLimit = 90.0f;
-    public float topLookXLimit = 90.0f;
+    public float lookXLimit = 90.0f;
+    public float lookYLimit = 90.0f;
     private Vector3 currentRotation;
     private Vector3 smoothVelocity = Vector3.zero;
     public float smoothTime = 0.2f;
     public Transform turret;
     float initialRotationX;
+    private float rotationY;
+    float rotationX;
+    public float cameraSmoothness = 5f;
 
     void Start() {
         initialRotationX = gun.transform.rotation.x;
@@ -22,7 +26,19 @@ public class Turret : MonoBehaviour
 
     void Update()
     {
-        transform.rotation *= Quaternion.Euler(0, Input.GetAxis("Mouse X") * lookSpeed, 0);
-        // gun.transform.rotation = Quaternion.Euler(rotationX, 0, 0); 
+        float h = -Input.GetAxis("Mouse Y") * lookSpeed;
+        float v = Input.GetAxis("Mouse X") * lookSpeed;
+   
+        Vector3 eulers = transform.localEulerAngles;
+    
+        rotationX += h;
+        rotationY += v;
+
+        rotationX = Mathf.Clamp(rotationX, -lookYLimit, lookYLimit);
+        rotationY = Mathf.Clamp(rotationY, -lookXLimit, lookXLimit);
+
+        var targetRotation = Quaternion.Euler(Vector3.up * rotationY) * Quaternion.Euler(Vector3.right * rotationX);
+
+        transform.localRotation = Quaternion.Lerp(transform.localRotation, targetRotation, cameraSmoothness * Time.deltaTime);
     }
 }
