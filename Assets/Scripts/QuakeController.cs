@@ -55,12 +55,15 @@ public class QuakeController : MonoBehaviour
 	private bool IsGrounded;
 	private bool leftWall;
 	private bool rightWall;
+	private bool isWallRunning;
+	public float wallGravityMod = 0.5f;
+	private Vector3 wallJumpDir;
 	
 	Vector3 udp;
     float rotationX = 0;
     public float lookSpeed = 2.0f;
     public float lookXLimit = 90.0f;
-	private bool sprint = false;
+	private bool walk = false;
 
     void Start()
     {
@@ -71,9 +74,9 @@ public class QuakeController : MonoBehaviour
 
     void Update()
 	{
-		if(Input.GetKeyDown(KeyCode.LeftShift))
+		if(Input.GetKey(KeyCode.LeftShift))
         {
-			sprint = !sprint;
+			walk = !walk;
         }
 
         rotationX += -Input.GetAxis("Mouse Y") * lookSpeed;
@@ -84,19 +87,24 @@ public class QuakeController : MonoBehaviour
 		IsGrounded = Physics.CheckSphere(GroundCheck.position, GroundDistance, groundLayer);
 		leftWall = Physics.CheckSphere(leftCheck.position, wallDistance, wallLayer);
 		rightWall = Physics.CheckSphere(rightCheck.position, wallDistance, wallLayer);
+		isWallRunning = (leftWall || rightWall); 
 		
 		QueueJump();
 		/* Movement, here's the important part */
-		if(sprint)
+		if(!walk)
 		{
-			
 			if (controller.isGrounded)
 				groundMove();
-			else if (!controller.isGrounded)
-				AirMove();
+			else 
+			{
+				if(isWallRunning)
+					WallMove();
+				else
+					AirMove();	
+			}
 		}
 		else
-			standardMove();
+			walkMove();
 
 		// Move the controller
 		controller.Move(playerVelocity * Time.deltaTime);
@@ -142,6 +150,26 @@ public class QuakeController : MonoBehaviour
 		playerVelocity.z += accelspeed * wishdir.z;
 	}
 
+	public void WallMove()
+	{
+		playerVelocity.y -= gravity * Time.deltaTime * wallGravityMod;
+		if(Input.GetButtonDown("Jump"))
+		{
+			playerVelocity.y = jumpSpeed / 1.5f;
+			wallJumpDir = transform.TransformDirection(Vector3.right);
+			if(leftWall)
+			{
+				playerVelocity.x += wallJumpDir.x * jumpSpeed;
+				playerVelocity.z += wallJumpDir.z * jumpSpeed;
+			}
+			else
+			{
+				playerVelocity.x += -wallJumpDir.x * jumpSpeed;
+				playerVelocity.z += -wallJumpDir.z * jumpSpeed;
+			}
+		}
+	}
+
 	//Execs when the player is in the air
 	public void AirMove()
 	{
@@ -179,13 +207,7 @@ public class QuakeController : MonoBehaviour
 		// !Aircontrol
 
 		// Apply gravity
-		if(leftWall || rightWall)
-		{
-			playerVelocity.y = 0;
-		}
-		else{
-			playerVelocity.y -= gravity * Time.deltaTime;
-		}
+		playerVelocity.y -= gravity * Time.deltaTime;
 
 		/**
 			* Air control occurs when the player is in the air, it allows
@@ -286,7 +308,7 @@ public class QuakeController : MonoBehaviour
 			playerVelocity.z *= newspeed;
 		}
 	}
-	void standardMove()
+	void walkMove()
 	{
 		{
 			playerFriction = 0;

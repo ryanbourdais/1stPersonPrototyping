@@ -18,9 +18,11 @@ public class Cannon : MonoBehaviour
     public GameObject debugHitMarker;
     public float movementMod;
 
-    private float nextTimeToFire = 0f;
+    public float nextTimeToFire = 0f;
     public float blastRadius = 5f;
     private Collider[] hitTargets = new Collider[0];
+
+    public bool shoot = false;
 
 
     void Start() 
@@ -30,14 +32,14 @@ public class Cannon : MonoBehaviour
 
     void Update()
     {
-        if(Time.time >= nextTimeToFire + readyTime && Input.GetButton("Fire1"))
+        if(Time.time >= nextTimeToFire + readyTime && shoot)
         {
             nextTimeToFire = Time.time + 1f/fireRate;
             Shoot();
         }
     }
 
-    void Shoot()
+    public void Shoot()
     {
         muzzleFlash.Play();
 
@@ -67,6 +69,7 @@ public class Cannon : MonoBehaviour
 
             GameObject impactGO = Instantiate(impactEffect, hit.point, Quaternion.LookRotation(hit.normal));
             Destroy(impactGO, 2);
+            shoot = false;
         }
     }
 }
