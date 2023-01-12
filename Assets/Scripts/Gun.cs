@@ -22,6 +22,8 @@ public class Gun : MonoBehaviour
     public float movementMod;
 
     private float nextTimeToFire = 0f;
+    private float nextTimeToSecondaryFire = 0f;
+    public float secondaryReadyTime = 1f;
     private float count = 0f;
     public float blastRadius = 5f;
     private Collider[] hitTargets = new Collider[0];
@@ -55,10 +57,12 @@ public class Gun : MonoBehaviour
         if(Input.GetButton("Fire1") && Time.time >= nextTimeToFire + readyTime)
         {
             accuracy = readyAccuracy - accuracyMod;
+            nextTimeToFire = Time.time + 1f/fireRate;
             Shoot();
         }
-        if(Input.GetButton("Fire2"))
+        if(Input.GetButton("Fire2") && Time.time >= nextTimeToSecondaryFire + secondaryReadyTime)
         {
+            nextTimeToSecondaryFire = Time.time;
             ShootSecondary();
         }
     }

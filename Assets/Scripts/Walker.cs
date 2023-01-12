@@ -14,7 +14,7 @@ public class Walker : MonoBehaviour
     private AudioListener tankListener;
     private AudioListener playerListener;
     public GameObject gun;
-    public Cannon cannon;
+    public WalkerCannon cannon;
     public Canvas mainHUD;
     public float driveSpeed = 30f;
     public float turnSpeed = 1f;

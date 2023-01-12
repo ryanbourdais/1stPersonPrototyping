@@ -2424,7 +2424,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 325375154}
   m_Enabled: 0
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8b16f589d72feff479780102f1ceff10, type: 3}
+  m_Script: {fileID: 11500000, guid: 1c1b9198e036e3449bd0d59022d852cd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   damage: 200
@@ -2441,9 +2441,7 @@ MonoBehaviour:
   debugMode: 0
   debugHitMarker: {fileID: 0}
   movementMod: 0
-  nextTimeToFire: 0
-  blastRadius: 10
-  shoot: 0
+  blastRadius: 5
 --- !u!1 &335001941
 GameObject:
   m_ObjectHideFlags: 0
@@ -3339,6 +3337,7 @@ MonoBehaviour:
   debugHitMarker: {fileID: 2030118530031593390, guid: 094b0435309744c479f19ae9ed1bddd2,
     type: 3}
   movementMod: 100
+  secondaryReadyTime: 1
   blastRadius: 5
   muzzleFlashSecondary: {fileID: 759518471}
   explosionEffect: {fileID: 1324015925}
