@@ -1,0 +1,39 @@
+Debug Walker ParticleSystem
+Redo QuakeController
+Inventory
+Player respawning
+Add magazines/cooldowns to guns
+    -perhaps GoW QTE for reloads?
+Different weapons 
+    -LMG
+    -Rifle
+    -Battle Rifle
+    -Pistol
+    -Shotgun
+    -SMG
+    -sniper??????
+Basic flood enemy
+create basic AI using Diagram
+    -Use cone as trigger for searching
+    -if enter trigger cast ray from enemy to obj, if player change state
+basic enemy vehicle AIs
+    -tank
+    -walker
+    -car
+AI for group control
+animal/beast AI?
+friendly AI
+wall running animation (turning cam)
+Sliding
+Grenades
+    -Throwing arch
+    -Smoke
+    -Flash
+    -HE
+    -Incendiary
+working HUD
+    -Ammo count
+    -Health
+    -Location???
+clean up wall running
+Convert to multiplayer

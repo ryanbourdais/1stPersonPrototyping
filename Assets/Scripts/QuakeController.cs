@@ -1,5 +1,8 @@
 using UnityEngine;
 
+
+
+//TODO: redo this from scratch so you have a better handler
 public class QuakeController : MonoBehaviour
 {
 	public CharacterController controller;
