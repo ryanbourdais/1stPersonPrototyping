@@ -23,6 +23,7 @@ public class Walker : MonoBehaviour
     QuakeController playerCon;
     Gun playerWeapon;
     WalkerTurret walkerTurret;
+    public WalkerMachineGun walkerMachineGun;
     public CharacterController carController;
     public float lookSpeed = 2.0f;
     float carRotationX = 0;
@@ -47,6 +48,7 @@ public class Walker : MonoBehaviour
             playerInCar = true;
             cannon.enabled = true;
             // mainHUD.enabled = false;
+            walkerMachineGun.enabled = true;
             tankListener.enabled = true;
             playerWeapon.enabled = false;
             playerCon.enabled = false;
@@ -76,6 +78,7 @@ public class Walker : MonoBehaviour
                 player.transform.parent = null;
                 cannon.enabled = false;
                 mainHUD.enabled = true;
+                walkerMachineGun.enabled = false;
                 tankListener.enabled = false;
                 playerWeapon.enabled = true;
                 playerCon.enabled = true;

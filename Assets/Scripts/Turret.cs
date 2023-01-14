@@ -54,5 +54,12 @@ public class Turret : MonoBehaviour
                     count = 0; 
             }
         }
+        if(Input.GetButtonDown("Fire2"))
+        {
+            for(int i = 0; i <= cannons.Length - 1; i++)
+            {
+                cannons[i].shoot = true;
+            }
+        }
     }
 }

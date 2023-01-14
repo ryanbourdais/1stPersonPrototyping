@@ -368,6 +368,7 @@
 "Assets/Scripts/Vehicle.cs"
 "Assets/Scripts/Walker.cs"
 "Assets/Scripts/WalkerCannon.cs"
+"Assets/Scripts/WalkerMachineGun.cs"
 "Assets/Scripts/WalkerTurret.cs"
 "Assets/Shared/Ramps/Runtime/RampAsset.cs"
 "Assets/Shared/Scripts/AdjustTimeScale.cs"
